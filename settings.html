@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ToolHub 设置 — 主题、快捷键、数据管理。">
+<title>设置 · ToolHub</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2334d399'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='17' font-weight='bold' text-anchor='middle' fill='%23052e21'%3ET%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #06090b;
+    --bg-2: #0a0f13;
+    --surface: rgba(255, 255, 255, 0.028);
+    --surface-hover: rgba(255, 255, 255, 0.05);
+    --line: rgba(255, 255, 255, 0.08);
+    --line-soft: rgba(255, 255, 255, 0.05);
+    --text: #eaf1f5;
+    --muted: #8d9aa6;
+    --faint: #5d6a76;
+    --accent: #34d399;
+    --accent-hi: #6ee7b7;
+    --accent-deep: #10b981;
+    --accent-ink: #052e21;
+    --danger: #f87171;
+    --warn: #fbbf24;
+    --radius-card: 16px;
+    --radius-input: 10px;
+    --display: "Space Grotesk", -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    --sans: -apple-system, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.65;
+    min-height: 100dvh;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection { background: rgba(52, 211, 153, 0.3); }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb { background: #1d2830; border-radius: 999px; border: 2px solid var(--bg); }
+  ::-webkit-scrollbar-thumb:hover { background: #2a3742; }
+  :focus-visible { outline: 2px solid var(--accent-deep); outline-offset: 2px; border-radius: 4px; }
+
+  .bg-aurora {
+    position: fixed; inset: -25%;
+    background:
+      radial-gradient(640px 420px at 18% 8%, rgba(52, 211, 153, 0.11), transparent 62%),
+      radial-gradient(760px 520px at 86% 16%, rgba(14, 165, 164, 0.075), transparent 62%),
+      radial-gradient(900px 700px at 60% 100%, rgba(52, 211, 153, 0.045), transparent 60%);
+    filter: blur(48px);
+    pointer-events: none; z-index: 0;
+  }
+  .bg-grid {
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.032) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.032) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse 95% 62% at 50% 0%, black 25%, transparent 78%);
+    mask-image: radial-gradient(ellipse 95% 62% at 50% 0%, black 25%, transparent 78%);
+    pointer-events: none; z-index: 0;
+  }
+  .bg-grain {
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+    opacity: 0.035;
+    pointer-events: none; z-index: 60;
+  }
+
+  .topnav {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 64px;
+    display: flex; align-items: center;
+    padding: 0 max(24px, calc(50vw - 600px));
+    border-bottom: 1px solid var(--line-soft);
+    background: rgba(6, 9, 11, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    z-index: 40;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none; color: var(--text);
+    font-family: var(--display);
+    font-weight: 600; font-size: 16.5px;
+    letter-spacing: 0.01em;
+  }
+  .brand-mark {
+    width: 30px; height: 30px; border-radius: 9px;
+    background: linear-gradient(135deg, #34d399, #0ea5a4);
+    color: var(--accent-ink);
+    display: grid; place-items: center;
+    font-family: var(--mono); font-size: 14px; font-weight: 700;
+    box-shadow: 0 4px 18px rgba(52, 211, 153, 0.28);
+  }
+  .nav-links { display: flex; gap: 4px; margin-left: 28px; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 14px; padding: 7px 12px; border-radius: 8px;
+    transition: color 0.15s, background 0.15s;
+  }
+  .nav-links a:hover { color: var(--text); background: var(--surface); }
+  .nav-links a.active { color: var(--accent); background: rgba(52, 211, 153, 0.08); }
+  @media (max-width: 640px) { .nav-links { display: none; } }
+
+  main {
+    position: relative; z-index: 1;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 120px 24px 64px;
+  }
+
+  .crumbs {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--faint);
+    margin-bottom: 28px;
+    font-family: var(--mono);
+  }
+  .crumbs a { color: var(--muted); text-decoration: none; }
+  .crumbs a:hover { color: var(--accent); }
+
+  .page-head { margin-bottom: 36px; }
+  .page-head h1 {
+    font-family: var(--display);
+    font-size: clamp(30px, 4vw, 44px);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+  .page-head p {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  .settings-group {
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-card);
+    background: var(--surface);
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .group-title {
+    padding: 16px 22px;
+    font-family: var(--display);
+    font-size: 15px; font-weight: 600;
+    border-bottom: 1px solid var(--line-soft);
+    color: var(--text);
+  }
+  .setting-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--line-soft);
+    gap: 16px;
+  }
+  .setting-row:last-child { border-bottom: none; }
+  .setting-row .info .t { font-size: 14.5px; font-weight: 500; }
+  .setting-row .info .d { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+
+  /* 开关 */
+  .switch {
+    position: relative;
+    width: 44px; height: 24px;
+    flex-shrink: 0;
+  }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .slider {
+    position: absolute; cursor: pointer;
+    inset: 0;
+    background: rgba(255,255,255,0.1);
+    border-radius: 999px;
+    transition: background 0.25s var(--ease);
+  }
+  .slider::before {
+    content: ""; position: absolute;
+    height: 18px; width: 18px;
+    left: 3px; top: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.25s var(--ease);
+  }
+  .switch input:checked + .slider { background: var(--accent); }
+  .switch input:checked + .slider::before { transform: translateX(20px); }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    height: 38px; padding: 0 18px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 13.5px; font-family: var(--sans); font-weight: 500;
+    cursor: pointer; text-decoration: none; white-space: nowrap;
+    transition: transform 0.14s var(--ease), background 0.18s, border-color 0.18s;
+  }
+  .btn:hover { border-color: rgba(255,255,255,0.16); background: var(--surface-hover); }
+  .btn:active { transform: scale(0.97); }
+  .btn.primary {
+    background: var(--accent); border-color: var(--accent);
+    color: var(--accent-ink); font-weight: 650;
+  }
+  .btn.primary:hover { background: var(--accent-hi); border-color: var(--accent-hi); }
+  .btn.danger-outline { color: var(--danger); border-color: rgba(248,113,113,0.35); }
+  .btn.danger-outline:hover { border-color: var(--danger); background: rgba(248,113,113,0.07); }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+  kbd {
+    font-family: var(--mono); font-size: 12px;
+    padding: 2px 8px; border-radius: 6px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--line);
+    color: var(--muted);
+  }
+
+  .toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translate(-50%, 12px);
+    padding: 10px 20px;
+    border-radius: 10px;
+    background: rgba(10, 15, 19, 0.95);
+    border: 1px solid var(--line);
+    color: var(--text);
+    font-size: 13.5px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.25s, transform 0.25s var(--ease);
+    z-index: 100;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  .footer {
+    position: relative; z-index: 1;
+    border-top: 1px solid var(--line-soft);
+    margin-top: 80px;
+    background: rgba(0,0,0,0.2);
+  }
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 44px 24px 28px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 40px;
+  }
+  @media (max-width: 760px) {
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+  }
+  .footer-brand .brand {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none; color: var(--text);
+    font-family: var(--display);
+    font-weight: 600; font-size: 17px;
+    margin-bottom: 12px;
+  }
+  .footer-brand .brand-mark-sm {
+    width: 26px; height: 26px; border-radius: 8px;
+    background: linear-gradient(135deg, #34d399, #0ea5a4);
+    color: var(--accent-ink);
+    display: grid; place-items: center;
+    font-family: var(--mono); font-size: 13px; font-weight: 700;
+    box-shadow: 0 4px 14px rgba(52,211,153,0.25);
+  }
+  .footer-brand p {
+    font-size: 13px; color: var(--muted);
+    line-height: 1.7; max-width: 28ch;
+    margin-bottom: 16px;
+  }
+  .socials { display: flex; gap: 10px; }
+  .socials a {
+    width: 34px; height: 34px; border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    display: grid; place-items: center;
+    color: var(--muted); text-decoration: none;
+    font-family: var(--mono); font-size: 13px; font-weight: 600;
+    transition: all 0.18s var(--ease);
+  }
+  .socials a:hover { color: var(--accent); border-color: rgba(52,211,153,0.4); transform: translateY(-2px); }
+  .footer-col h4 {
+    font-size: 13px; font-weight: 600;
+    color: var(--text);
+    margin-bottom: 14px;
+    letter-spacing: 0.02em;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .footer-col a {
+    color: var(--muted); text-decoration: none;
+    font-size: 13px;
+    transition: color 0.15s;
+  }
+  .footer-col a:hover { color: var(--accent); }
+  .footer-bottom {
+    border-top: 1px solid var(--line-soft);
+    padding: 18px 24px;
+    text-align: center;
+    font-size: 12px; color: var(--faint);
+    line-height: 1.9;
+  }
+  .footer-bottom a { color: var(--faint); text-decoration: none; }
+  .footer-bottom a:hover { color: var(--accent); }
+
+  /* 手机端适配 */
+  @media (max-width: 760px) {
+    .topnav { padding: 0 16px; height: 60px; }
+    main { padding: 100px 16px 48px; }
+    .page-head h1 { font-size: clamp(26px, 8vw, 36px); }
+    .setting-row { padding: 16px; gap: 12px; }
+    .setting-row .info .t { font-size: 14px; }
+    .group-title { padding: 14px 16px; }
+    .btn { padding: 0 14px; height: 36px; font-size: 13px; }
+    .footer-bottom { font-size: 11.5px; padding: 16px; line-height: 1.8; }
+  }
+  @media (max-width: 480px) {
+    .footer-inner { grid-template-columns: 1fr; }
+    .footer-brand p { max-width: 100%; }
+    .setting-row { flex-direction: column; align-items: flex-start; }
+    .setting-row .btn, .setting-row kbd { align-self: flex-end; }
+  }
+</style>
+</head>
+<body>
+<div class="bg-aurora" aria-hidden="true"></div>
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-grain" aria-hidden="true"></div>
+
+<header class="topnav">
+  <a class="brand" href="index.html"><span class="brand-mark">T</span>ToolHub</a>
+  <nav class="nav-links">
+    <a href="index.html">首页</a>
+    <a href="index.html#/json">工具</a>
+    <a href="about.html">关于我们</a>
+    <a href="settings.html" class="active">设置</a>
+  </nav>
+</header>
+
+<main>
+  <nav class="crumbs"><a href="index.html">首页</a><span>/</span><span>设置</span></nav>
+
+  <div class="page-head">
+    <h1>设置</h1>
+    <p>个性化你的 ToolHub 体验。设置保存在本机浏览器中。</p>
+  </div>
+
+  <div class="settings-group">
+    <div class="group-title">外观</div>
+    <div class="setting-row">
+      <div class="info">
+        <div class="t">暗色主题</div>
+        <div class="d">使用深色界面（亮色主题即将推出）</div>
+      </div>
+      <label class="switch">
+        <input type="checkbox" checked disabled>
+        <span class="slider"></span>
+      </label>
+    </div>
+    <div class="setting-row">
+      <div class="info">
+        <div class="t">减少动画</div>
+        <div class="d">关闭过渡动画与实时效果，提升性能</div>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="reduce-motion">
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="settings-group">
+    <div class="group-title">快捷键</div>
+    <div class="setting-row">
+      <div class="info">
+        <div class="t">打开命令面板</div>
+        <div class="d">快速搜索并启动任意工具</div>
+      </div>
+      <kbd>Ctrl K</kbd>
+    </div>
+    <div class="setting-row">
+      <div class="info">
+        <div class="t">关闭命令面板</div>
+        <div class="d">退出命令面板</div>
+      </div>
+      <kbd>Esc</kbd>
+    </div>
+    <div class="setting-row">
+      <div class="info">
+        <div class="t">导航历史</div>
+        <div class="d">在工具间前后切换</div>
+      </div>
+      <kbd>Alt ←/→</kbd>
+    </div>
+  </div>
+
+  <div class="settings-group">
+    <div class="group-title">数据</div>
+    <div class="setting-row">
+      <div class="info">
+        <div class="t">本地存储</div>
+        <div class="d" id="storage-size">正在计算…</div>
+      </div>
+      <button class="btn" id="refresh-size">刷新</button>
+    </div>
+    <div class="setting-row">
+      <div class="info">
+        <div class="t">清除使用记录</div>
+        <div class="d">清除工具使用次数与最近使用列表</div>
+      </div>
+      <button class="btn danger-outline" id="clear-usage">清除记录</button>
+    </div>
+    <div class="setting-row">
+      <div class="info">
+        <div class="t">清除所有本地数据</div>
+        <div class="d">清除账号、收藏、记录等全部本地数据（不可恢复）</div>
+      </div>
+      <button class="btn danger-outline" id="clear-all">全部清除</button>
+    </div>
+  </div>
+
+  <div class="settings-group">
+    <div class="group-title">关于</div>
+    <div class="setting-row">
+      <div class="info">
+        <div class="t">ToolHub 版本</div>
+        <div class="d">开发者本地工具集</div>
+      </div>
+      <kbd>v1.0.0</kbd>
+    </div>
+    <div class="setting-row">
+      <div class="info">
+        <div class="t">开源协议</div>
+        <div class="d">MIT License</div>
+      </div>
+      <a class="btn" href="about.html">了解更多</a>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="brand" href="index.html"><span class="brand-mark-sm">T</span>ToolHub</a>
+      <p>开发者本地工具集。八个工具，全部在你的浏览器里运行，零上传。</p>
+      <div class="socials">
+        <a href="#" title="GitHub">G</a>
+        <a href="#" title="邮箱">@</a>
+        <a href="#" title="RSS">R</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>工具</h4>
+      <ul>
+        <li><a href="index.html#/json">JSON 美化</a></li>
+        <li><a href="index.html#/base64">Base64 编解码</a></li>
+        <li><a href="index.html#/url">URL 编解码</a></li>
+        <li><a href="index.html#/timestamp">时间戳转换</a></li>
+        <li><a href="index.html#/color">颜色转换</a></li>
+        <li><a href="index.html#/password">密码生成</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>导航</h4>
+      <ul>
+        <li><a href="index.html">首页</a></li>
+        <li><a href="about.html">关于我们</a></li>
+        <li><a href="settings.html">设置</a></li>
+        <li><a href="index.html#/me">个人中心</a></li>
+        <li><a href="index.html#/login">登录</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>支持</h4>
+      <ul>
+        <li><a href="settings.html">快捷键</a></li>
+        <li><a href="about.html">隐私政策</a></li>
+        <li><a href="#" onclick="alert('意见反馈邮箱：feedback@toolhub.dev');return false;">意见反馈</a></li>
+        <li><a href="#" onclick="alert('ToolHub v1.0.0');return false;">更新日志</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 ToolHub · 八个工具，全部在你的浏览器里运行 · MIT License<br>
+    请注意：本网站为合法网站，不涉及暴力、色情、儿童色情与非法攻击等内容。如发现此类情况，可联系本人 GitHub <a href="https://github.com/xiaohehe123666" target="_blank">xiaohehe123666</a>，也可向相关部门举报，本站会严厉整改。对于不法分子冒充本站、盗用本站内容，本站将追究到底。
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const $ = s => document.querySelector(s);
+  const toast = $("#toast");
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 2200);
+  }
+
+  function calcStorageSize() {
+    let total = 0;
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      total += (k.length + localStorage.getItem(k).length) * 2;
+    }
+    const kb = (total / 1024).toFixed(1);
+    return `${kb} KB · ${localStorage.length} 项`;
+  }
+  function refreshSize() {
+    $("#storage-size").textContent = calcStorageSize();
+  }
+  refreshSize();
+
+  $("#refresh-size").addEventListener("click", () => { refreshSize(); showToast("已刷新"); });
+
+  $("#clear-usage").addEventListener("click", () => {
+    const keys = Object.keys(localStorage).filter(k => k.startsWith("toolhub_usage_") || k === "toolhub_usage_total" || k === "toolhub_recent");
+    keys.forEach(k => localStorage.removeItem(k));
+    refreshSize();
+    showToast("使用记录已清除");
+  });
+
+  $("#clear-all").addEventListener("click", () => {
+    if (confirm("确定清除所有本地数据？此操作不可恢复。")) {
+      localStorage.clear();
+      refreshSize();
+      showToast("所有本地数据已清除");
+    }
+  });
+
+  // 减少动画开关
+  const reduceSwitch = $("#reduce-motion");
+  const savedReduce = localStorage.getItem("toolhub_reduce_motion") === "1";
+  reduceSwitch.checked = savedReduce;
+  reduceSwitch.addEventListener("change", () => {
+    localStorage.setItem("toolhub_reduce_motion", reduceSwitch.checked ? "1" : "0");
+    showToast(reduceSwitch.checked ? "已减少动画" : "已恢复动画");
+  });
+</script>
+</body>
+</html>
