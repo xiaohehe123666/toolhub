@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ToolHub 客服与支持 — 常见问题、联系渠道与意见反馈，帮助你快速解决问题。">
+<title>客服 · ToolHub</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2334d399'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='17' font-weight='bold' text-anchor='middle' fill='%23052e21'%3ET%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://miaoda.feishu.cn">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+<style>
+  :root {
+    --bg: #06090b;
+    --bg-2: #0a0f13;
+    --surface: rgba(255, 255, 255, 0.028);
+    --surface-hover: rgba(255, 255, 255, 0.05);
+    --line: rgba(255, 255, 255, 0.08);
+    --line-soft: rgba(255, 255, 255, 0.05);
+    --text: #eaf1f5;
+    --muted: #8d9aa6;
+    --faint: #5d6a76;
+    --accent: #34d399;
+    --accent-hi: #6ee7b7;
+    --accent-deep: #10b981;
+    --accent-ink: #052e21;
+    --danger: #f87171;
+    --radius-card: 16px;
+    --radius-input: 10px;
+    --display: "Space Grotesk", -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    --sans: -apple-system, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.65;
+    min-height: 100dvh;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection { background: rgba(52, 211, 153, 0.3); }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb { background: #1d2830; border-radius: 999px; border: 2px solid var(--bg); }
+  ::-webkit-scrollbar-thumb:hover { background: #2a3742; }
+  :focus-visible { outline: 2px solid var(--accent-deep); outline-offset: 2px; border-radius: 4px; }
+
+  .bg-aurora {
+    position: fixed; inset: -25%;
+    background:
+      radial-gradient(640px 420px at 18% 8%, rgba(52, 211, 153, 0.11), transparent 62%),
+      radial-gradient(760px 520px at 86% 16%, rgba(14, 165, 164, 0.075), transparent 62%),
+      radial-gradient(900px 700px at 60% 100%, rgba(52, 211, 153, 0.045), transparent 60%);
+    filter: blur(48px);
+    pointer-events: none; z-index: 0;
+  }
+  .bg-grid {
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.032) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.032) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse 95% 62% at 50% 0%, black 25%, transparent 78%);
+    mask-image: radial-gradient(ellipse 95% 62% at 50% 0%, black 25%, transparent 78%);
+    pointer-events: none; z-index: 0;
+  }
+  .bg-grain {
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+    opacity: 0.035;
+    pointer-events: none; z-index: 60;
+  }
+
+  /* 顶栏 */
+  .topnav {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 64px;
+    display: flex; align-items: center;
+    padding: 0 max(24px, calc(50vw - 600px));
+    border-bottom: 1px solid var(--line-soft);
+    background: rgba(6, 9, 11, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    z-index: 40;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none; color: var(--text);
+    font-family: var(--display);
+    font-weight: 600; font-size: 16.5px;
+    letter-spacing: 0.01em;
+  }
+  .brand-mark {
+    width: 30px; height: 30px; border-radius: 9px;
+    background: linear-gradient(135deg, #34d399, #0ea5a4);
+    color: var(--accent-ink);
+    display: grid; place-items: center;
+    font-family: var(--mono); font-size: 14px; font-weight: 700;
+    box-shadow: 0 4px 18px rgba(52, 211, 153, 0.28);
+  }
+  .nav-links { display: flex; gap: 4px; margin-left: 28px; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 14px; padding: 7px 12px; border-radius: 8px;
+    transition: color 0.15s, background 0.15s;
+  }
+  .nav-links a:hover { color: var(--text); background: var(--surface); }
+  .nav-links a.active { color: var(--accent); background: rgba(52, 211, 153, 0.08); }
+  @media (max-width: 640px) { .nav-links { display: none; } }
+
+  /* 主内容 */
+  main {
+    position: relative; z-index: 1;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 120px 24px 64px;
+  }
+
+  .crumbs {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--faint);
+    margin-bottom: 28px;
+    font-family: var(--mono);
+  }
+  .crumbs a { color: var(--muted); text-decoration: none; }
+  .crumbs a:hover { color: var(--accent); }
+
+  .page-head { margin-bottom: 40px; }
+  .page-head h1 {
+    font-family: var(--display);
+    font-size: clamp(34px, 4.5vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+  }
+  .page-head h1 .accent { color: var(--accent); }
+  .page-head p {
+    margin-top: 16px;
+    color: var(--muted);
+    font-size: 16.5px;
+    max-width: 62ch;
+  }
+
+  /* 联系渠道 */
+  .channels {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 40px;
+  }
+  @media (max-width: 760px) { .channels { grid-template-columns: 1fr; } }
+  .chan {
+    display: flex; flex-direction: column; gap: 6px;
+    padding: 22px;
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-card);
+    background: var(--surface);
+    text-decoration: none;
+    color: var(--text);
+    transition: transform 0.2s var(--ease), border-color 0.2s, background 0.2s;
+  }
+  .chan:hover {
+    transform: translateY(-3px);
+    border-color: rgba(52, 211, 153, 0.3);
+    background: var(--surface-hover);
+  }
+  .chan .k {
+    font-family: var(--mono); font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+  .chan .t { font-family: var(--display); font-size: 16px; font-weight: 600; }
+  .chan .d { font-size: 13px; color: var(--muted); }
+
+  /* 区块标题 */
+  .section-head {
+    display: flex; align-items: baseline; gap: 16px;
+    margin: 44px 0 20px;
+  }
+  .section-head h2 {
+    font-family: var(--display);
+    font-size: 22px; font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .section-head span { font-family: var(--mono); font-size: 12px; color: var(--faint); }
+
+  /* FAQ 手风琴 */
+  .faq { display: flex; flex-direction: column; gap: 10px; }
+  .faq details {
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-card);
+    background: var(--surface);
+    padding: 4px 22px;
+    transition: border-color 0.2s;
+  }
+  .faq details[open] { border-color: rgba(52, 211, 153, 0.22); }
+  .faq summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 15px 0;
+    font-size: 15px; font-weight: 500;
+    font-family: var(--display);
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after {
+    content: "+";
+    font-family: var(--mono);
+    font-size: 15px;
+    color: var(--accent);
+    transition: transform 0.25s var(--ease);
+    flex-shrink: 0;
+  }
+  .faq details[open] summary::after { transform: rotate(45deg); }
+  .faq .a {
+    padding: 0 0 16px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.75;
+    max-width: 72ch;
+  }
+  .faq .a code {
+    font-family: var(--mono); font-size: 12.5px;
+    background: rgba(52, 211, 153, 0.08);
+    border: 1px solid rgba(52, 211, 153, 0.18);
+    border-radius: 6px;
+    padding: 1px 6px;
+    color: var(--accent-hi);
+  }
+
+  /* 反馈表单 */
+  .feedback {
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-card);
+    background: var(--surface);
+    padding: 26px;
+    scroll-margin-top: 90px;
+  }
+  .feedback h3 { font-family: var(--display); font-size: 17px; font-weight: 600; margin-bottom: 4px; }
+  .feedback .sub { font-size: 13.5px; color: var(--muted); margin-bottom: 22px; }
+  .field-label {
+    display: block;
+    font-size: 12.5px; color: var(--faint);
+    margin-bottom: 8px;
+    font-family: var(--mono);
+    letter-spacing: 0.02em;
+  }
+  input[type="text"], input[type="email"], select, textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-input);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    padding: 10px 14px;
+    transition: border-color 0.18s, background 0.18s;
+  }
+  input::placeholder, textarea::placeholder { color: var(--faint); }
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: rgba(52, 211, 153, 0.45);
+    background: rgba(255,255,255,0.045);
+  }
+  textarea { resize: vertical; min-height: 130px; line-height: 1.6; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 620px) { .row { grid-template-columns: 1fr; } }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    height: 40px; padding: 0 20px;
+    border-radius: var(--radius-input);
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 13.5px; font-family: var(--sans); font-weight: 500;
+    cursor: pointer; text-decoration: none; white-space: nowrap;
+    transition: transform 0.14s var(--ease), background 0.18s, border-color 0.18s;
+  }
+  .btn:hover { border-color: rgba(255,255,255,0.16); background: var(--surface-hover); }
+  .btn:active { transform: scale(0.97); }
+  .btn.primary {
+    background: var(--accent); border-color: var(--accent);
+    color: var(--accent-ink); font-weight: 600;
+  }
+  .btn.primary:hover { background: var(--accent-hi); border-color: var(--accent-hi); }
+  .form-actions { display: flex; align-items: center; gap: 14px; margin-top: 18px; flex-wrap: wrap; }
+  .form-note { font-size: 12.5px; color: var(--faint); }
+
+  /* 滚动显现 */
+  .rv { opacity: 0; transform: translateY(16px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
+  .rv.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .rv { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* 页脚 */
+  .footer {
+    position: relative; z-index: 1;
+    border-top: 1px solid var(--line-soft);
+    margin-top: 80px;
+    background: rgba(0,0,0,0.2);
+  }
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 44px 24px 28px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 40px;
+  }
+  @media (max-width: 760px) {
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+  }
+  .footer-brand .brand {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none; color: var(--text);
+    font-family: var(--display);
+    font-weight: 600; font-size: 17px;
+    margin-bottom: 12px;
+  }
+  .footer-brand .brand-mark-sm {
+    width: 26px; height: 26px; border-radius: 8px;
+    background: linear-gradient(135deg, #34d399, #0ea5a4);
+    color: var(--accent-ink);
+    display: grid; place-items: center;
+    font-family: var(--mono); font-size: 13px; font-weight: 700;
+    box-shadow: 0 4px 14px rgba(52,211,153,0.25);
+  }
+  .footer-brand p {
+    font-size: 13px; color: var(--muted);
+    line-height: 1.7; max-width: 28ch;
+    margin-bottom: 16px;
+  }
+  .socials { display: flex; gap: 10px; }
+  .socials a {
+    width: 34px; height: 34px; border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    display: grid; place-items: center;
+    color: var(--muted); text-decoration: none;
+    font-family: var(--mono); font-size: 13px; font-weight: 600;
+    transition: all 0.18s var(--ease);
+  }
+  .socials a:hover { color: var(--accent); border-color: rgba(52,211,153,0.4); transform: translateY(-2px); }
+  .footer-col h4 {
+    font-size: 13px; font-weight: 600;
+    color: var(--text);
+    margin-bottom: 14px;
+    letter-spacing: 0.02em;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .footer-col a {
+    color: var(--muted); text-decoration: none;
+    font-size: 13px;
+    transition: color 0.15s;
+  }
+  .footer-col a:hover { color: var(--accent); }
+  .footer-bottom {
+    border-top: 1px solid var(--line-soft);
+    padding: 18px 24px;
+    text-align: center;
+    font-size: 12px; color: var(--faint);
+    line-height: 1.9;
+  }
+  .footer-bottom a { color: var(--faint); text-decoration: none; }
+  .footer-bottom a:hover { color: var(--accent); }
+
+  .toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translate(-50%, 12px);
+    padding: 10px 20px;
+    border-radius: 10px;
+    background: rgba(10, 15, 19, 0.95);
+    border: 1px solid var(--line);
+    color: var(--text);
+    font-size: 13.5px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.25s, transform 0.25s var(--ease);
+    z-index: 100;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  /* 手机端适配 */
+  @media (max-width: 760px) {
+    .topnav { padding: 0 16px; height: 60px; }
+    main { padding: 100px 16px 48px; }
+    .page-head h1 { font-size: clamp(28px, 9vw, 40px); }
+    .page-head p { font-size: 15px; }
+    .footer-bottom { font-size: 11.5px; padding: 16px; line-height: 1.8; }
+  }
+  @media (max-width: 480px) {
+    .footer-inner { grid-template-columns: 1fr; }
+    .footer-brand p { max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="bg-aurora" aria-hidden="true"></div>
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-grain" aria-hidden="true"></div>
+
+<header class="topnav">
+  <a class="brand" href="index.html"><span class="brand-mark">T</span>ToolHub</a>
+  <nav class="nav-links">
+    <a href="index.html">首页</a>
+    <a href="index.html#/json">工具</a>
+    <a href="new-tools.html">新工具</a>
+    <a href="index.html#products">产品</a>
+    <a href="about.html">关于我们</a>
+    <a href="settings.html">设置</a>
+    <a href="support.html" class="active">客服</a>
+  </nav>
+</header>
+
+<main>
+  <nav class="crumbs"><a href="index.html">首页</a><span>/</span><span>客服</span></nav>
+
+  <div class="page-head rv">
+    <h1>ToolHub <span class="accent">客服与支持</span></h1>
+    <p>遇到问题先看常见问答；找不到答案，可以直接发邮件或在下方提交反馈。所有工具体验问题都可以在这里告诉我。</p>
+  </div>
+
+  <div class="channels rv">
+    <a class="chan" href="mailto:feedback@toolhub.dev">
+      <span class="k">MAIL</span>
+      <span class="t">发邮件</span>
+      <span class="d">feedback@toolhub.dev，工作日当天回复</span>
+    </a>
+    <a class="chan" href="https://github.com/xiaohehe123666" target="_blank" rel="noopener">
+      <span class="k">GITHUB</span>
+      <span class="t">GitHub</span>
+      <span class="d">提 issue、看源码、关注更新</span>
+    </a>
+    <a class="chan" href="#feedback">
+      <span class="k">FORM</span>
+      <span class="t">意见反馈</span>
+      <span class="d">直接提交，跳转到邮件客户端发送</span>
+    </a>
+  </div>
+
+  <div class="section-head rv">
+    <h2>常见问题</h2>
+    <span>FAQ</span>
+  </div>
+  <div class="faq rv">
+    <details>
+      <summary>我的数据会被上传吗？</summary>
+      <div class="a">不会。所有工具（包括六个新工具）都使用浏览器本地计算，数据不出本机，不经过任何服务器。</div>
+    </details>
+    <details>
+      <summary>六个新工具在哪里使用？</summary>
+      <div class="a">首页的「新工具」分区有全部入口卡片，也可以直接打开 <code>new-tools.html</code> 总览页，每个工具都是独立页面：正则测试、哈希计算、进制转换、JWT 解码、文本对比、UUID 生成。</div>
+    </details>
+    <details>
+      <summary>快捷键是什么？</summary>
+      <div class="a">在首页按 <code>Ctrl K</code>（Mac 为 <code>⌘ K</code>）唤起命令面板，可以快速搜索和切换全部工具。</div>
+    </details>
+    <details>
+      <summary>工具用不了或结果不对怎么办？</summary>
+      <div class="a">先刷新页面，并确认浏览器是最新版本（Chrome / Edge / Firefox 均可）。仍无法解决时，用下方表单反馈，附上你输入的内容和期望结果。</div>
+    </details>
+    <details>
+      <summary>哈希、JWT 这类工具可以放心用吗？</summary>
+      <div class="a">可以。哈希使用 Web Crypto 在本机计算；JWT 只做本地解码展示，不校验签名，也不要在这里粘贴生产环境的密钥。</div>
+    </details>
+    <details>
+      <summary>手机端能用吗？</summary>
+      <div class="a">能。所有页面都做了响应式适配，手机上单列展示，功能与桌面端一致。</div>
+    </details>
+  </div>
+
+  <div class="section-head rv">
+    <h2>意见反馈</h2>
+    <span>FEEDBACK</span>
+  </div>
+  <div class="feedback rv" id="feedback">
+    <h3>提交反馈</h3>
+    <p class="sub">填写下面内容并提交，页面会帮你拼好邮件、打开邮件客户端，无需额外操作。</p>
+    <form id="fb-form">
+      <div class="row">
+        <div>
+          <label class="field-label" for="fb-type">反馈类型</label>
+          <select id="fb-type">
+            <option value="功能建议">功能建议</option>
+            <option value="问题反馈">问题反馈</option>
+            <option value="设计建议">设计建议</option>
+            <option value="其他">其他</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label" for="fb-email">联系邮箱（选填）</label>
+          <input type="email" id="fb-email" placeholder="用于回复你" autocomplete="email">
+        </div>
+      </div>
+      <div style="margin-top:14px;">
+        <label class="field-label" for="fb-body">反馈内容</label>
+        <textarea id="fb-body" placeholder="描述你遇到的问题或想法，越具体越好"></textarea>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn primary" id="fb-submit">提交反馈</button>
+        <span class="form-note">提交会打开邮件客户端发送到 feedback@toolhub.dev</span>
+      </div>
+    </form>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="brand" href="index.html"><span class="brand-mark-sm">T</span>ToolHub</a>
+      <p>开发者本地工具集。所有工具全部在你的浏览器里运行，零上传。</p>
+      <div class="socials">
+        <a href="#" title="GitHub">G</a>
+        <a href="#" title="邮箱">@</a>
+        <a href="#" title="RSS">R</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>工具</h4>
+      <ul>
+        <li><a href="index.html#/json">JSON 美化</a></li>
+        <li><a href="index.html#/base64">Base64 编解码</a></li>
+        <li><a href="index.html#/url">URL 编解码</a></li>
+        <li><a href="index.html#/timestamp">时间戳转换</a></li>
+        <li><a href="index.html#/color">颜色转换</a></li>
+        <li><a href="index.html#/password">密码生成</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>导航</h4>
+      <ul>
+        <li><a href="index.html">首页</a></li>
+        <li><a href="new-tools.html">新工具</a></li>
+        <li><a href="index.html#products">产品</a></li>
+        <li><a href="about.html">关于我们</a></li>
+        <li><a href="settings.html">设置</a></li>
+        <li><a href="support.html">客服</a></li>
+        <li><a href="index.html#/me">个人中心</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>支持</h4>
+      <ul>
+        <li><a href="settings.html">快捷键</a></li>
+        <li><a href="privacy.html">隐私政策</a></li>
+        <li><a href="#feedback">意见反馈</a></li>
+        <li><a href="#" onclick="alert('ToolHub v1.0.0');return false;">更新日志</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 ToolHub · 十四个工具，全部在你的浏览器里运行 · MIT License<br>
+    请注意：本网站为合法网站，不涉及暴力、色情、儿童色情与非法攻击等内容。如发现此类情况，可联系本人 GitHub <a href="https://github.com/xiaohehe123666" target="_blank">xiaohehe123666</a>，也可向相关部门举报，本站会严厉整改。对于不法分子冒充本站、盗用本站内容，本站将追究到底。
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===== 通用 ===== */
+const $ = s => document.querySelector(s);
+const toastEl = $("#toast");
+let toastTimer = null;
+function toast(msg) {
+  toastEl.textContent = msg;
+  toastEl.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2200);
+}
+
+/* ===== 滚动显现 ===== */
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const rvEls = document.querySelectorAll(".rv");
+if (reduceMotion || !("IntersectionObserver" in window)) {
+  rvEls.forEach(el => el.classList.add("in"));
+} else {
+  const rvObs = new IntersectionObserver(entries => {
+    entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add("in"); rvObs.unobserve(en.target); } });
+  }, { rootMargin: "0px 0px -60px 0px", threshold: 0.1 });
+  rvEls.forEach(el => rvObs.observe(el));
+}
+
+/* ===== 页脚社交占位链接反馈 ===== */
+document.querySelectorAll(".socials a").forEach(a => a.addEventListener("click", e => { e.preventDefault(); toast("社交链接即将上线"); }));
+
+/* ===== 反馈表单：拼好邮件并打开邮件客户端 ===== */
+$("#fb-form").addEventListener("submit", e => {
+  e.preventDefault();
+  const type = $("#fb-type").value;
+  const email = $("#fb-email").value.trim();
+  const body = $("#fb-body").value.trim();
+  if (!body) { toast("请填写反馈内容"); $("#fb-body").focus(); return; }
+  const subject = encodeURIComponent("[ToolHub 反馈] " + type);
+  const text = encodeURIComponent("反馈类型：" + type + "\n联系邮箱：" + (email || "未填写") + "\n\n" + body);
+  window.location.href = "mailto:feedback@toolhub.dev?subject=" + subject + "&body=" + text;
+  toast("已打开邮件客户端，点击发送即可");
+});
+</script>
+</body>
+</html>
